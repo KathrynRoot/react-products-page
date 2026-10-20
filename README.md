@@ -1,0 +1,1 @@
+A basic, single-page React project for displaying and sorting products.
