@@ -7,3 +7,9 @@ export type Product = {
     inStock: boolean;
     imagePath: string;
 };
+
+export type Checkbox = {
+    id: number;
+    name: string;
+    checked: boolean;
+};
