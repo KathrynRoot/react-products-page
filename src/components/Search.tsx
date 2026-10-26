@@ -8,23 +8,21 @@ export function Search( {searchQuery, setSearchQuery}:
 
     const inputRef = useRef<HTMLInputElement>(null);
     return (
-        <div className="search">
-            <div className="search-bar">
-                <label htmlFor="search">
-                    Search Products:
-                </label>
-                <div>
-                    <input
-                        ref={inputRef}
-                        value={searchQuery}
-                        onChange={(e) => { setSearchQuery(e.target.value); }}
-                        placeholder="search..."
-                        name="search"
-                        id="search"
-                        type="text"
-                    />
-                </div>
-            </div>
+        <div id="search-bar">
+            <label htmlFor="search">
+                Search Products:
+            </label>
+            {/* <div> */}
+                <input
+                    ref={inputRef}
+                    value={searchQuery}
+                    onChange={(e) => { setSearchQuery(e.target.value); }}
+                    placeholder="search..."
+                    name="search"
+                    id="search"
+                    type="text"
+                />
+            {/* </div> */}
         </div>
     )
 }

@@ -9,8 +9,8 @@ type Props = {
 
 export default function CategoryCheckboxes({ categories, selectedCategories, onCategoryChange }: Props) {
     return (
-        <>
-            {categories.map((category, i) => 
+        <div id="categories">
+            {categories.map((category) => 
                 <label htmlFor={category} key={category}>
                     <input 
                         id={category}
@@ -22,6 +22,6 @@ export default function CategoryCheckboxes({ categories, selectedCategories, onC
                     {category}
                 </label>
             )}
-        </>
+        </div>
     );
 }
