@@ -52,7 +52,7 @@ export const products: Product[] = [
         category: 'Dining',
         price: 2,
         rating: 2,
-        inStock: true,
+        inStock: false,
         imagePath: '/images/1.png',
     },
     {
