@@ -8,6 +8,7 @@ export default function ProductsList({ products }: {products: Product[]}) {
         <>
             <ul className="product-grid">
                 {products.map((product, index) => (
+                    // setPending(true);
                     <li key={product.id} className="card">
                         <div className="card-img-wrapper">
                             <img

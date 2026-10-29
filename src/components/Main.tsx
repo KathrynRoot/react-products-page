@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import ProductsList from "./ProductsList.js";
 import { Search } from './Search.js';
 import CategoryCheckboxes from "./CategoryCheckboxes.js";
 import { products } from '../data/products.js';
 import RangeSliders from './RangeSliders.js';
+import type { Product } from '../types/index.js';
+import { LoadingSymbol } from './LoadingSymbol.js';
 
 export default function Main() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -13,12 +15,16 @@ export default function Main() {
   const [direction, setDirection] = useState("asc");
   const [showInStock, setShowInStock] = useState(false);
   const [priceRange, setPriceRange] = useState({min: 0, max: 99});
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [pending, setPending] = useState(false);
 
-  const sortedList = [...products].sort((a, b) =>
+    const sortedList = useMemo(() => {
+    return  [...products].sort((a, b) =>
     {
-      const result = sortBy === "price" ? Number(a.price) - Number(b.price) : a.name.localeCompare(b.name);
-      return direction === "asc" ? result : -result;
+        const result = sortBy === "price" ? Number(a.price) - Number(b.price) : a.name.localeCompare(b.name);
+        return direction === "asc" ? result : -result;
     }); 
+    }, [products, sortBy, direction]);
 
   function handleCategoryChange(category: string, checked: boolean) {
         setSelectedCategories(current => {
@@ -29,18 +35,36 @@ export default function Main() {
         })
     }
 
-  const filteredProducts = [...sortedList]
-    .filter(product => {
-      const inStock = showInStock ? (product.inStock) : products;
+    useEffect(() => {
+        setPending(true);
+        const timeout = setTimeout(() => {
+            const result = sortedList.filter(product => {
+                const inStock = !showInStock || product.inStock;
 
-      const matchesPriceRange = (product.price >= priceRange.min) && (product.price <= priceRange.max);
-    
-      const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+                const matchesPriceRange = (product.price >= priceRange.min) && (product.price <= priceRange.max);
+                
+                const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
 
-      const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(product.category);
+                const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(product.category);
 
-      return matchesSearch && matchesCategory && inStock && matchesPriceRange;
-    })
+                return matchesSearch && matchesCategory && inStock && matchesPriceRange;
+            });
+            setFilteredProducts(result);
+            setPending(false);
+            // console.log(pending);
+        }, 500);
+        return () => clearTimeout(timeout);
+
+    }, [
+        sortedList,
+        showInStock,
+        products,
+        priceRange.min,
+        priceRange.max,
+        searchQuery,
+        selectedCategories
+    ]);
+
   return (
     <main>
         <div id="search">
@@ -60,7 +84,7 @@ export default function Main() {
                     {direction === "asc" ? "Ascending" : "Descending"}
                 </button>
             </div>
-            <div>
+            <div id="availability">
                 <button onClick={() => setShowInStock(prev => !prev)}>
                     {showInStock ? "Show All" : "Show Available"}
                 </button>
@@ -76,7 +100,22 @@ export default function Main() {
             />
         </div>
         <section id="products">
-            <ProductsList products={filteredProducts} />
+            {pending ? (
+                <div className="loading">
+                    <LoadingSymbol />
+                </div>
+            ) : (
+                (filteredProducts.length === 0) ? (
+                    (
+                        <div className="no-results">
+                            <p>Sorry, no results</p>
+                        </div>
+                    )
+                )  : 
+                <ProductsList products={filteredProducts} />
+                )
+             }
+            
         </section>
     </main>
   )
