@@ -6,6 +6,7 @@ import { products } from '../data/products.js';
 import RangeSliders from './RangeSliders.js';
 import type { Product } from '../types/index.js';
 import { LoadingSymbol } from './LoadingSymbol.js';
+import { CheckboxChecked } from './CheckboxChecked.js';
 
 export default function Main() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -18,10 +19,21 @@ export default function Main() {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [pending, setPending] = useState(false);
 
+    const handleClearAll = () => {
+        setSearchQuery("");
+        setSelectedCategories([]);
+        setPriceRange({min: 0, max: 99});
+        setSortBy("price");
+        setDirection("asc");
+        setShowInStock(false);
+    };
+
     const sortedList = useMemo(() => {
     return  [...products].sort((a, b) =>
     {
-        const result = sortBy === "price" ? Number(a.price) - Number(b.price) : a.name.localeCompare(b.name);
+        const result = sortBy === "price" ? Number(a.price) - Number(b.price) 
+        : sortBy === "rating" ? Number(a.rating) - Number(b.rating) 
+        : a.name.localeCompare(b.name);
         return direction === "asc" ? result : -result;
     }); 
     }, [products, sortBy, direction]);
@@ -78,6 +90,7 @@ export default function Main() {
                     <select id="sortBy" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
                     <option value="name">Name</option>
                     <option value="price">Price</option>
+                    <option value="rating">Rating</option>
                 </select>
 
                 <button id="sort-toggle" onClick={() => setDirection((prev) => prev === "asc" ? "desc" : "asc")}>
@@ -85,18 +98,24 @@ export default function Main() {
                 </button>
             </div>
             <div id="availability">
-                <button onClick={() => setShowInStock(prev => !prev)}>
-                    {showInStock ? "Show All" : "Show Available"}
+                <p>Show In Stock Only:</p>
+                <button id="stock-button" onClick={() => setShowInStock(prev => !prev)}>
+                    {showInStock ? (<CheckboxChecked />) : ""}
                 </button>
+            </div>
+            <div>
+                <button id="clear-all" onClick={() => handleClearAll()}>Clear all filters</button>
             </div>
         </div>
         <div>
-            <RangeSliders min={0} max={99} step={1} initialMin={0} initialMax={99} onChange={(minPrice, maxPrice) => {
-                setPriceRange({
-                    min: minPrice,
-                    max: maxPrice,
-                });
-            }}
+            <RangeSliders min={0} max={99} step={1} initialMin={0} initialMax={99} 
+                onChange={(minPrice, maxPrice) => {
+                    setPriceRange({
+                        min: minPrice,
+                        max: maxPrice,
+                    });
+                }
+            }
             />
         </div>
         <section id="products">

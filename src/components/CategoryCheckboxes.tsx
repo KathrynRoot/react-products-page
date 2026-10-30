@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 type Props = {
     categories: string[];
     selectedCategories: string[];
@@ -10,7 +8,6 @@ type Props = {
 };
 
 export default function CategoryCheckboxes({ categories, selectedCategories, onCategoryChange }: Props) {
-    // const [pending, setPending] = useState(true);
     return (
         <div id="categories">
             {categories.map((category) => 
@@ -21,20 +18,9 @@ export default function CategoryCheckboxes({ categories, selectedCategories, onC
                         type="checkbox"
                         checked={selectedCategories.includes(category)}
                         onChange={e => {
-                            // console.log(pending);
-                            // setPending(false);
-                            // console.log(pending);
-                            // setTimeout(() => {
                                 onCategoryChange(category, e.target.checked)
-                            // }, 1000);
-                            // setPending(false);
-                            // console.log(pending);
                             }
                         }
-                        // onClick={() => {
-                            
-                            
-                        // }}
                     />
                     {category}
                 </label>

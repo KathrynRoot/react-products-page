@@ -2,6 +2,9 @@ main {
   margin: 0 auto;
   flex: 1;
 }
+html {
+  /* background-color: var(--blue); */
+}
 
 /* Header */
 #header-title {
@@ -10,12 +13,21 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   img {
     width: 100px;
     height: 100px;
   }
 }
+header {
+  border-bottom: 1px solid var(--grey);
+  background-color: var(--yellow);
+  padding: 10px;
+}
 
+input {
+  font-family: var(--sans);
+}
 /* Products Cards */
 .card {
   list-style: none;
@@ -100,6 +112,7 @@ main {
   flex-direction: column;
   max-width: 1100px;
   margin: 20px 0;
+  gap: 10px;
 }
 
 #sort-by, #categories, #search-bar {
@@ -117,19 +130,39 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 5px;
+  gap: 10px;
   padding: 10px;
 }
 
 button, select {
   font-family: var(--sans);
   padding: 3px 5px;
+  border: 1px solid var(--grey);
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 16px;
 }
 
 #availability {
   margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
+#stock-button {
+  height: 25px;
+  width: 25px;
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#clear-all {
+  border: 2px solid var(--orange);
+}
 /* Price range  */
 #price-range {
   display: flex;

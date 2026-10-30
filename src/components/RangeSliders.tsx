@@ -10,7 +10,7 @@ interface RangeSliderProps {
 }
 
 export default function RangeSliders({
-    min = 0, max= 99, step = 1, initialMin = 0, initialMax = 99, onChange,
+    min = 0, max= 99, step = 1, initialMin = 0, initialMax = 99, onChange
     }: RangeSliderProps) {
           const [minPrice, setMinPrice] = useState(initialMin);
           const [maxPrice, setMaxPrice] = useState(initialMax);

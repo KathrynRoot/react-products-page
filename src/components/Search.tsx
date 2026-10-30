@@ -12,17 +12,15 @@ export function Search( {searchQuery, setSearchQuery}:
             <label htmlFor="search">
                 Search Products:
             </label>
-            {/* <div> */}
-                <input
-                    ref={inputRef}
-                    value={searchQuery}
-                    onChange={(e) => { setSearchQuery(e.target.value); }}
-                    placeholder="search..."
-                    name="search"
-                    id="search"
-                    type="text"
-                />
-            {/* </div> */}
+            <input
+                ref={inputRef}
+                value={searchQuery}
+                onChange={(e) => { setSearchQuery(e.target.value); }}
+                placeholder="mushroom..."
+                name="search"
+                id="search"
+                type="text"
+            />
         </div>
     )
 }

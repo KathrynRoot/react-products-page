@@ -15,11 +15,17 @@
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
+  --black: #170A1C;
+  --blue: #8390FA;
+  --grey: #5E747F;
+  --orange: #C44900;
+  --yellow: #EFD6AC;
+
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
   color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
+  color: var(--black);
+  /* background: var(--bg); */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -61,7 +67,7 @@
   flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
-  padding: 0 10px;
+  /* padding: 0 10px; */
 }
 
 body {
